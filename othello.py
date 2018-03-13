@@ -1,10 +1,10 @@
 import copy
 
 # 空白、白、黒を定義
-BLANK = "□"
-WHITE = "○"
-BLACK = "●"
-OPPONENT = {WHITE: BLACK, BLACK: WHITE}
+class Stone():
+    BLANK = "□"
+    WHITE = "○"
+    BLACK = "●"
 
 
 class Othello:
@@ -15,14 +15,17 @@ class Othello:
     def __init__(self):
         self.SIZE
         center = self.SIZE // 2
-        board = [[BLANK for i in range(self.SIZE)]
+        board = [[Stone.BLANK for i in range(self.SIZE)]
                  for j in range(self.SIZE)]  # BLANKだけの盤面boardを定義
-        board[center - 1][center - 1:center + 1] = [WHITE, BLACK]
-        board[center][center - 1:center + 1] = [BLACK, WHITE]
+        board[center - 1][center - 1:center + 1] = [Stone.WHITE, Stone.BLACK]
+        board[center][center - 1:center + 1] = [Stone.BLACK, Stone.WHITE]
         self.board = board
 
     def __str__(self):
         return "\n".join(" ".join(row) for row in self.board)
+
+    def __getitem__(self,x,y):
+        return self.board[x][y]
 
     def copy(self, board2):  # 引数のboard2の盤面をコピーする
         self.board = copy.deepcopy(board2.board)
@@ -35,14 +38,14 @@ class Othello:
             y += dy
             if not (0 <= x < self.SIZE and 0 <= y < self.SIZE):
                 return 0
-            if self.board[x][y] == BLANK:
+            if self.board[x][y] == Stone.BLANK:
                 return 0
             if self.board[x][y] == stone:
                 return count
             count += 1
 
     def judge(self, x, y, stone):  # board[x][y]にstone(WHITEorBLACK)がおけるかどうか
-        if self.board[x][y] != BLANK:
+        if self.board[x][y] != Stone.BLANK:
             return False
         for dx, dy in self.VECTOR:
             if self.count_reversible(x, y, dx, dy, stone) > 0:
@@ -68,3 +71,7 @@ class Othello:
                 if self.judge(x, y, stone):
                     ls.append((x, y))
         return ls
+
+if __name__=='__main__':
+    board=Othello()
+    print(board)
