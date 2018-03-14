@@ -1,0 +1,36 @@
+#:import ot othello
+<Blank>:
+    size_hint:None,None
+    size:"96dp","96dp"
+    background_normal: "blank.png"
+    on_release: self.parent.parent.put(self.index[0],self.index[1])
+
+<White>:
+    size_hint:None,None
+    size:"96dp","96dp"
+    background_normal: "white.png"
+
+<Black>:
+    size_hint:None,None
+    size:"96dp","96dp"
+    background_normal: "black.png"
+
+<Result>:
+    title:"Result"
+    size_hint:None,None
+    size:200,250
+
+    BoxLayout:
+        id:result
+        orientation:"vertical"
+        Label:
+            text:"WHITE:"+str(root.white)+"\n"+"BLACK:"+str(root.black)+"\n"+"\n"+root.winner
+
+<RootWidget>:
+    GridLayout:
+        size_hint:None,None
+        size:"796dp","796dp"
+        id: grid
+        cols: ot.Othello.SIZE
+        rows: ot.Othello.SIZE
+        spacing: '4dp'

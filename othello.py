@@ -2,9 +2,9 @@ import copy
 
 # 空白、白、黒を定義
 class Stone():
-    BLANK = "□"
-    WHITE = "○"
-    BLACK = "●"
+    BLANK = "BLANK"
+    WHITE = "WHITE"
+    BLACK = "BLACK"
 
 
 class Othello:
@@ -38,14 +38,14 @@ class Othello:
             y += dy
             if not (0 <= x < self.SIZE and 0 <= y < self.SIZE):
                 return 0
-            if self.board[x][y] == Stone.BLANK:
+            if self.__getitem__(x,y) == Stone.BLANK:
                 return 0
-            if self.board[x][y] == stone:
+            if self.__getitem__(x,y) == stone:
                 return count
             count += 1
 
     def judge(self, x, y, stone):  # board[x][y]にstone(WHITEorBLACK)がおけるかどうか
-        if self.board[x][y] != Stone.BLANK:
+        if self.__getitem__(x,y)!= Stone.BLANK:
             return False
         for dx, dy in self.VECTOR:
             if self.count_reversible(x, y, dx, dy, stone) > 0:
@@ -61,7 +61,6 @@ class Othello:
             for i in range(1, n + 1):
                 # ひっくり返せる数だけstoneに変更する
                 self.board[x + dx * i][y + dy * i] = stone
-                print(dx, dy)
         return True
 
     def alljudge(self, stone):  # 打てる場所を探索
@@ -71,6 +70,16 @@ class Othello:
                 if self.judge(x, y, stone):
                     ls.append((x, y))
         return ls
+
+    def count_stone(self):
+        white,black=0,0
+        for x in range(8):
+            for y in range(8):
+                if self.__getitem__(x,y)==Stone.WHITE:
+                    white+=1
+                if self.__getitem__(x,y)==Stone.BLACK:
+                    black+=1
+        return white,black
 
 if __name__=='__main__':
     board=Othello()
