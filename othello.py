@@ -11,7 +11,7 @@ class Othello:
     SIZE = 8
     VECTOR = ((-1, -1), (0, -1), (1, -1), (-1, 0),
               (1, 0), (-1, 1), (0, 1), (1, 1))  # 右と下が+
-
+    turn=Stone.BLACK
     def __init__(self):
         self.SIZE
         center = self.SIZE // 2
@@ -80,6 +80,28 @@ class Othello:
                 if self.__getitem__(x,y)==Stone.BLACK:
                     black+=1
         return white,black
+
+    def change_turn(self):
+        if self.turn==Stone.BLACK:
+            self.turn=Stone.WHITE
+        else:
+            self.turn=Stone.BLACK
+
+    def check_pass(self):
+        if self.alljudge(self.turn)==[]:
+            self.change_turn()
+            return True
+            if self.alljudge(self.turn)==[]:#WHITE and BLACK cannot put
+                return False
+
+    def finish(self):#return winner
+        white,black=self.count_stone()
+        if white>black:
+            return Stone.WHITE
+        elif white<black:
+            return Stone.BLACK
+        else:
+            return Stone.WHITE
 
 if __name__=='__main__':
     board=Othello()
