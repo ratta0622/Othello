@@ -29,6 +29,7 @@ class Othello:
 
     def copy(self, board2):  # 引数のboard2の盤面をコピーする
         self.board = copy.deepcopy(board2.board)
+        self.turn = board2.turn
 
     # board[x][y]にstoneをおいてdx,dy方向に何個ひっくり返せるか
     def count_reversible(self, x, y, dx, dy, stone):
@@ -90,7 +91,6 @@ class Othello:
     def check_pass(self):
         if self.alljudge(self.turn)==[]:
             self.change_turn()
-            return True
             if self.alljudge(self.turn)==[]:#WHITE and BLACK cannot put
                 return False
 
